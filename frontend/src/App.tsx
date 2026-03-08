@@ -1,12 +1,9 @@
-import { useState } from 'react'
-import ComicForm from './components/FormComponent.jsx'
+import ComicForm from './components/FormComponent'
 import './App.css'
 
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <ComicForm/>
   )
