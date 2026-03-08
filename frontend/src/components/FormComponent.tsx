@@ -7,7 +7,7 @@
  * ---------------------------------------------------------
  */
 import { useState, type FormEvent, type ChangeEvent } from "react";
-import { registrarComic, type ComicData } from "../services/comicService.ts";
+import { registrarComic, type ComicData } from "../services/comicService.tsx";
 
 
 /**
@@ -33,7 +33,7 @@ function ComicForm() {
     const [titulo, setTitulo] = useState<string>("");
     const [numero, setNumero] = useState<string>("");
     const [editorial, setEditorial] = useState<string>("");
-    const [fecha, setFecha] = useState<string>("");
+    const [fecha, setFecha] = useState<string>();
     const [precio, setPrecio] = useState<string>("");
     const [respuesta, setRespuesta] = useState<string | null>(null);
 
