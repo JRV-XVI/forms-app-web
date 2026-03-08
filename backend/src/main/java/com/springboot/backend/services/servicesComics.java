@@ -18,7 +18,7 @@ public class servicesComics {
         comics.add(comic);
     }
 
-    public Comic createComic(String title, int volume, String publisher, String datePublished, float price) {
+    public Comic createComic(String title, Integer volume, String publisher, String datePublished, Float price) {
         Comic comic = new Comic(nextId++, title, volume, publisher, datePublished, price);
         addComic(comic);
         return comic;

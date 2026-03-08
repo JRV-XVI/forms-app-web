@@ -2,16 +2,16 @@
 package com.springboot.backend.model;
 
 public class Comic {
-    private int id;
+    private Integer id;
     private String title;
-    private int volume;
+    private Integer volume;
     private String publisher;
     private String datePublished;
-    private float price;
+    private Float price;
 
     public Comic() {}
 
-    public Comic(int id, String title, int volume, String publisher, String datePublished, float price) {
+    public Comic(Integer id, String title, Integer volume, String publisher, String datePublished, Float price) {
         this.id = id;
         this.title = title;
         this.volume = volume;
