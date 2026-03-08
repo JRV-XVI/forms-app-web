@@ -1,28 +1,34 @@
 package com.springboot.backend.controller;
 
 import org.springframework.web.bind.annotation.*;
-import com.springboot.backend.services.serviceCreateComics;
-import com.springboot.backend.services.serviceGetComics;
+import com.springboot.backend.services.servicesComics;
+import com.springboot.backend.model.Comic;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/comics")
 public class ControllerComics {
 
-    private serviceCreateComics serviceCreateComics;
-    private serviceGetComics serviceGetComics;
+    private final servicesComics servicesComics;
 
-    public ControllerComics(serviceCreateComics serviceCreateComics, serviceGetComics serviceGetComics) {
-        this.serviceCreateComics = serviceCreateComics;
-        this.serviceGetComics = serviceGetComics;
+    public ControllerComics(servicesComics servicesComics) {
+        this.servicesComics = servicesComics;
     }
 
     @PostMapping
-    public String createComics() {
-        return serviceCreateComics.createComics();
+    public Comic createComic(@RequestBody Comic comicData) {
+        return servicesComics.createComic(
+            comicData.getTitle(),
+            null,  // author parameter (not stored in model)
+            comicData.getVolume(),
+            comicData.getPublisher(),
+            comicData.getDatePublished(),
+            comicData.getPrice()
+        );
     }
 
     @GetMapping
-    public String getComics() {
-        return serviceGetComics.getComics();
+    public List<Comic> getComics() {
+        return servicesComics.getComics();
     }
 }
