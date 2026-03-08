@@ -1,68 +1,49 @@
+
 /**
- * ---------------------------------------------------------
- * IMPORTACIONES
- * ---------------------------------------------------------
- * useState → Hook de React para manejar estado interno
- * registrarComic → función que llama al backend (Spring Boot)
- * ---------------------------------------------------------
+ * FormComponent.tsx
+ * 
+ * Componente de formulario para registrar nuevos cómics.
+ * Captura los datos del cómic (título, volumen, editorial, fecha y precio),
+ * los envía al backend mediante el servicio createComic,
+ * y muestra un mensaje de éxito cuando el registro es exitoso.
  */
 import { useState, type FormEvent, type ChangeEvent } from "react";
-import { registrarComic, type ComicData } from "../services/comicService.tsx";
+import { createComic, type ComicData } from "../services/comicService";
+import "./FormComponent.css";
 
-
-/**
- * ---------------------------------------------------------
- * COMPONENTE: ComicForm
- * ---------------------------------------------------------
- * Componente funcional que:
- * 1. Captura datos de un cómic desde inputs
- * 2. Envía los datos al backend
- * 3. Muestra la respuesta del backend
- * ---------------------------------------------------------
- */
 function ComicForm() {
 
-    /**
-     * ---------------------------------------------------------
-     * BLOQUE 1: Estados del componente
-     * ---------------------------------------------------------
-     * Cada campo del formulario se guarda en un estado
-     * respuesta → guarda la respuesta del backend
-     * ---------------------------------------------------------
-     */
-    const [titulo, setTitulo] = useState<string>("");
-    const [numero, setNumero] = useState<string>("");
-    const [editorial, setEditorial] = useState<string>("");
-    const [fecha, setFecha] = useState<string>("");
-    const [precio, setPrecio] = useState<string>("");
-    const [respuesta, setRespuesta] = useState<string | null>(null);
+    const [title, setTitle] = useState<string>("");
+    const [volume, setVolume] = useState<string>("");
+    const [publisher, setPublisher] = useState<string>("");
+    const [datePublished, setDatePublished] = useState<string>("");
+    const [price, setPrice] = useState<string>("");
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
 
-    /**
-     * ---------------------------------------------------------
-     * BLOQUE 2: Manejo del envío del formulario
-     * ---------------------------------------------------------
-     * - e.preventDefault() evita recarga
-     * - Se llama al servicio "registrarComic"
-     * - Se actualiza el estado respuesta
-     * ---------------------------------------------------------
-     */
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
             const comicData: ComicData = {
-                titulo,
-                numero,
-                editorial,
-                fecha,
-                precio
+                title,
+                volume: parseInt(volume),
+                publisher,
+                datePublished,
+                price: parseFloat(price)
             };
             
-            const data = await registrarComic(comicData);
+            const newComic = await createComic(comicData);
 
-            // Guardamos la respuesta que viene del backend
-            setRespuesta(data.mensaje);
+            // Guardamos mensaje de éxito
+            setSuccessMessage(`Cómic "${newComic.title}" registrado exitosamente con ID: ${newComic.id}`);
+            
+            // Limpiar formulario
+            setTitle("");
+            setVolume("");
+            setPublisher("");
+            setDatePublished("");
+            setPrice("");
 
         } catch (error) {
             console.error(error);
@@ -71,82 +52,75 @@ function ComicForm() {
     };
 
 
-    /**
-     * ---------------------------------------------------------
-     * BLOQUE 3: Renderizado del componente (JSX)
-     * ---------------------------------------------------------
-     * - Formulario controlado
-     * - onChange actualiza estado
-     * - onSubmit ejecuta handleSubmit
-     * - Renderizado condicional de la respuesta
-     * ---------------------------------------------------------
-     */
     return (
-        <div>
+        <div className="form-container card">
             <h2>Registro de Cómic</h2>
 
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form className="comic-form" onSubmit={handleSubmit}>
+                <div className="form-group">
                     <input
+                        className="input-field"
                         type="text"
-                        placeholder="Título"
-                        value={titulo}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setTitulo(e.target.value)}
+                        placeholder="Título del Cómic"
+                        value={title}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
                         required
                     />
                 </div>
 
-                <div>
+                <div className="form-group">
                     <input
+                        className="input-field"
                         type="number"
-                        placeholder="Número"
-                        value={numero}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setNumero(e.target.value)}
+                        placeholder="Volumen"
+                        value={volume}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setVolume(e.target.value)}
                         required
                     />
                 </div>
 
-                <div>
+                <div className="form-group">
                     <input
+                        className="input-field"
                         type="text"
                         placeholder="Editorial"
-                        value={editorial}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setEditorial(e.target.value)}
+                        value={publisher}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setPublisher(e.target.value)}
                         required
                     />
                 </div>
 
-                <div>
+                <div className="form-group">
                     <input
+                        className="input-field"
                         type="date"
                         title="Fecha de publicación"
-                        value={fecha}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setFecha(e.target.value)}
+                        value={datePublished}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setDatePublished(e.target.value)}
                         required
                     />
                 </div>
 
-                <div>
+                <div className="form-group">
                     <input
+                        className="input-field"
                         type="number"
                         step="0.01"
                         placeholder="Precio"
-                        value={precio}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setPrecio(e.target.value)}
+                        value={price}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value)}
                         required
                     />
                 </div>
 
-                <button type="submit">Enviar</button>
+                <button className="btn btn-primary mt-sm" type="submit">Registrar Cómic</button>
             </form>
 
 
-            {/**
-             * Renderizado condicional:
-             * Solo muestra el resultado si no es null.
-             */}
-            {respuesta !== null && (
-                <h3>Respuesta: {respuesta}</h3>
+            {successMessage !== null && (
+                <div className="message message-success mt-lg">
+                    <h3>{successMessage}</h3>
+                </div>
             )}
         </div>
     );
