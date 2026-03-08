@@ -1,5 +1,4 @@
 /**
-
  * Barra de navegación principal de la aplicación.
  * 
  * - Utiliza NavLink de react-router-dom para navegación entre páginas
@@ -14,12 +13,8 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <NavLink to="/" className="nav-link">HomePage</NavLink>
-        <NavLink to="/homepage" className="nav-link">HomePage</NavLink>
-        <NavLink to="/dashbord" className="nav-link">Dashbord</NavLink>
-      </div>
-      <div>
-
+        <NavLink to="/" className="nav-link">Home</NavLink>
+        <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>
       </div>
     </nav>
   );

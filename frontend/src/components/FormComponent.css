@@ -1,0 +1,22 @@
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.8em;
+}
+
+.comic-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}

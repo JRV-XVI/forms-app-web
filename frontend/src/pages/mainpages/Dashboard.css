@@ -1,0 +1,9 @@
+.comics-count {
+    font-size: 1.1em;
+    color: var(--color-gray);
+}
+
+.price-cell {
+    font-weight: 600;
+    color: var(--color-red);
+}

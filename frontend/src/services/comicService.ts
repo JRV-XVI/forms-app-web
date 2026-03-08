@@ -1,29 +1,36 @@
 /**
+ * Servicio para interactuar con el backend de comics
+ * 
+ * - Comic: Interfaz que representa un cómic completo (con id)
+ * - ComicData: Interfaz para crear un cómic (sin id)
+ * - createComic: Función para crear un cómic
+ * - getComics: Función para obtener todos los cómics
+ */
 
-Este archivo define la función y los tipos para registrar un cómic en el backend.
+const API_URL = "http://localhost:8080/api/comics";
 
-ComicData: Interfaz que representa los datos de un cómic.
-ComicResponse: Interfaz para la respuesta del backend.
-registrarComic: Función asíncrona que envía los datos del cómic al backend mediante una petición HTTP POST.
+export interface Comic {
+    id: number;
+    title: string;
+    volume: number;
+    publisher: string;
+    datePublished: string;
+    price: number;
+}
 
-Si la respuesta es exitosa, retorna el mensaje del backend; si ocurre un error, lanza una excepción.
-
-**/
 export interface ComicData {
-    titulo: string;
-    numero: string;
-    editorial: string;
-    fecha: string;
-    precio: string;
+    title: string;
+    volume: number;
+    publisher: string;
+    datePublished: string;
+    price: number;
 }
 
-export interface ComicResponse {
-    mensaje: string;
-}
-
-export async function registrarComic(comic: ComicData): Promise<ComicResponse> {
-    
-    const response = await fetch("http://localhost:8080/api/comic/registrar", {
+/**
+ * Crea un nuevo cómic en el backend
+ */
+export async function createComic(comic: ComicData): Promise<Comic> {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -35,6 +42,25 @@ export async function registrarComic(comic: ComicData): Promise<ComicResponse> {
         throw new Error("Error al registrar el cómic en el backend");
     }
 
-    const data: ComicResponse = await response.json();
+    const data: Comic = await response.json();
+    return data;
+}
+
+/**
+ * Obtiene todos los cómics del backend
+ */
+export async function getComics(): Promise<Comic[]> {
+    const response = await fetch(API_URL, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al obtener los cómics del backend");
+    }
+
+    const data: Comic[] = await response.json();
     return data;
 }
