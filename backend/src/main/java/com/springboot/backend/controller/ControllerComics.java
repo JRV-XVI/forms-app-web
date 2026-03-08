@@ -11,6 +11,11 @@ public class ControllerComics {
     private serviceCreateComics serviceCreateComics;
     private serviceGetComics serviceGetComics;
 
+    public ControllerComics(serviceCreateComics serviceCreateComics, serviceGetComics serviceGetComics) {
+        this.serviceCreateComics = serviceCreateComics;
+        this.serviceGetComics = serviceGetComics;
+    }
+
     @PostMapping
     public String createComics() {
         return serviceCreateComics.createComics();
