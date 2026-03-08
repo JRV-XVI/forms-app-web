@@ -18,8 +18,8 @@ public class servicesComics {
         comics.add(comic);
     }
 
-    public Comic createComic(String title, String author, int volume, String publisher, String datePublished, float price) {
-        Comic comic = new Comic(nextId++, title, author, volume, publisher, datePublished, price);
+    public Comic createComic(String title, int volume, String publisher, String datePublished, float price) {
+        Comic comic = new Comic(nextId++, title, volume, publisher, datePublished, price);
         addComic(comic);
         return comic;
     }

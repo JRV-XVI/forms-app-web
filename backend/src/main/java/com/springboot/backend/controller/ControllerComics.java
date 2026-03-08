@@ -19,7 +19,6 @@ public class ControllerComics {
     public Comic createComic(@RequestBody Comic comicData) {
         return servicesComics.createComic(
             comicData.getTitle(),
-            null,  // author parameter (not stored in model)
             comicData.getVolume(),
             comicData.getPublisher(),
             comicData.getDatePublished(),

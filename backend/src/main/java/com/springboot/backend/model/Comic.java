@@ -9,7 +9,9 @@ public class Comic {
     private String datePublished;
     private float price;
 
-    public Comic(int id, String title, String author, int volume, String publisher, String datePublished, float price) {
+    public Comic() {}
+
+    public Comic(int id, String title, int volume, String publisher, String datePublished, float price) {
         this.id = id;
         this.title = title;
         this.volume = volume;
