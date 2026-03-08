@@ -14,8 +14,8 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <NavLink to="/" className="nav-link">xxxxxxxxx</NavLink>
-        <NavLink to="/about" className="nav-link">About</NavLink>
+        <NavLink to="/" className="nav-link">HomePage</NavLink>
+        <NavLink to="/homepage" className="nav-link">HomePage</NavLink>
         <NavLink to="/dashbord" className="nav-link">Dashbord</NavLink>
       </div>
       <div>
